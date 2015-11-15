@@ -1,7 +1,7 @@
-WORDCOUNT
+CHARCOUNT
 =========
 
-A tiny single page app to count the characters in a text area.
+A tiny single page application to count the characters in a text area.
 
 To setup
 
