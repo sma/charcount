@@ -14,7 +14,7 @@ body {
 	max-width: 700px;
 }
 
-h1 {
+.content > h1 {
 	font-size: 48px;
 	font-weight: 300;
 	line-height: 48px;
@@ -30,6 +30,7 @@ b {
 input, textarea {
 	display: block;
 	margin: 8px 0;
+	box-sizing: border-box;
 	background-color: inherit;
 	color: #444;
 	font-family: inherit;
@@ -50,7 +51,7 @@ textarea {
 	border-radius: 3px;
 }
 
-textarea:focus {
+input:focus, textarea:focus {
 	background: #FFF;
 }
 
@@ -67,11 +68,49 @@ textarea:focus {
 } 
 
 #genre {
-	text-transform: uppercase;
 	font-weight: 300;
 	font-size: 14px;
 }
 
 #text {
 	margin: 16px 0; 
+}
+
+#preview {
+	margin: 16px 0;
+	padding: 4em;
+	background: #FFF;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 3px;
+	color: #111;
+	font-family: 'Libre Baskerville', serif;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+#preview h2, #preview h3, #preview h4 {
+	text-align: center;
+	font-weight: normal;
+}
+
+#preview h2 {
+	margin: 1em 0 0;
+	font-size: 48px;
+	line-height: 58px;
+	font-weight: bold;
+}
+
+#preview h3 {
+	margin: 2em 0;
+	font-weight: normal;
+	font-style: italic;
+}
+
+#preview h4 {
+	margin: 2em 0;
+	text-transform: uppercase;
+}
+
+#preview p {
+	text-align: justify;
 }
