@@ -17,7 +17,7 @@ function countCharacters(s: string): number {
 
 /// Persists the specified input field or text area to local storage.
 function storeLocally(id: string) {
-	var el = <HTMLInputElement|HTMLTextAreaElement> document.getElementById(id);
+	var el = <HTMLInputElement | HTMLTextAreaElement>document.getElementById(id);
 	var handle: number;
 	if (el) {
 		el.value = localStorage.getItem(id);
@@ -33,11 +33,11 @@ function storeLocally(id: string) {
 /// Implements the preview function.
 function setupPreview(id: string, properties: string[]) {
 	var handle: number;
-	
+
 	function value(id: string): string {
-		return (<HTMLInputElement|HTMLTextAreaElement> document.getElementById(id)).value;
+		return (<HTMLInputElement | HTMLTextAreaElement>document.getElementById(id)).value;
 	}
-	
+
 	function format(s: string): string {
 		return "<p>" + s
 			.replace(/&/g, "&amp;")
@@ -54,7 +54,7 @@ function setupPreview(id: string, properties: string[]) {
 			.replace(/^#(.*)$/gm, "<h1>$1</h1>")
 			.replace(/\n\n/g, "</p><p>") + "</p>";
 	}
-	
+
 	function replace(element: HTMLElement, data: any) {
 		if (element.dataset["html"]) {
 			element.innerHTML = format(data[element.dataset["html"]]);
@@ -62,7 +62,7 @@ function setupPreview(id: string, properties: string[]) {
 			element.innerText = data[element.dataset["text"]];
 		} else {
 			for (var i = 0; i < element.children.length; i++) {
-				replace(<HTMLElement> element.children[i], data);
+				replace(<HTMLElement>element.children[i], data);
 			}
 		}
 	}
@@ -70,9 +70,9 @@ function setupPreview(id: string, properties: string[]) {
 	function preview() {
 		var preview = document.getElementById(id);
 		var data = {};
-		
+
 		properties.forEach(name => data[name] = value(name));
-		
+
 		if (properties.filter(name => data[name]).length) {
 			preview.style.display = "block";
 			replace(preview, data);
@@ -80,38 +80,38 @@ function setupPreview(id: string, properties: string[]) {
 			preview.style.display = "none";
 		}
 	}
-	
+
 	function updatePreview() {
 		clearTimeout(handle);
 		handle = setTimeout(preview, 500);
 	}
-	
+
 	properties.forEach(id => {
 		document.getElementById(id).addEventListener("input", updatePreview);
 	});
-	
+
 	preview();
 }
 
 /// Implements counting characters.
 function setupCount(textId: string, countId: string) {
-	var text = <HTMLTextAreaElement> document.getElementById(textId);
-	var count = <HTMLSpanElement> document.getElementById(countId);
-	
+	var text = <HTMLTextAreaElement>document.getElementById(textId);
+	var count = <HTMLSpanElement>document.getElementById(countId);
+
 	function updateCount() {
 		count.textContent = String(countCharacters(text.value));
 	}
-	
+
 	text.addEventListener("input", updateCount);
-	
-	updateCount();	
+
+	updateCount();
 }
 
 ready(() => {
 	// persist all user input
 	["title", "author", "genre", "text"].forEach(storeLocally);
-	
+
 	setupPreview("preview", ["title", "author", "genre", "text"]);
-	
+
 	setupCount("text", "count");
 });
