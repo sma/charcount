@@ -90,7 +90,7 @@ A tiny SPA to count non-whitespace characters.
 To setup, run `npm install`.
 ```
 
-Als nächstes benötige ich eine Konfigurationsdatei für TypeScript, die `tsconfig.json` heißen muss. Sie definiert, dass ich ES2015-kompatiblen Code erzeugen und dabei `app.ts` in `app.js` übersetzen will:
+Als nächstes benötige ich eine Konfigurationsdatei für TypeScript, die `tsconfig.json` heißen muss. Sie definiert, dass ich ES2015-kompatiblen Code erzeugen und dabei `app.ts` in `app.js` übersetzen will (das `^D` steht für Ctrl+D, was eingegeben werden muss, um `cat` zu beenden):
 
 ```js
 $ cat >tsconfig.json
@@ -143,19 +143,19 @@ gulp.task('default', ['typescript', 'browser-sync'], function () {
 });
 ```
 
-Zunächst importiert dies die Abhänigkeiten, insbesondere `browser-sync` und `typescript`. Dann definiere ich die Aufgaben (`gulp.task` genannt). 
+Zunächst importiert dies die Abhänigkeiten, insbesondere `browser-sync` und `typescript`. Dann definiere ich die Aufgaben (`gulp.task` genannt):
 
-Würde ich `gulp typescript` per Kommandozeile aufrufen, wird die eben definierte `tsconfig.json`-Datei eingelesen und alle dort vereinbarten Quelldateien werden übersetzt und zurück ins aktuelle Verzeichnis geschrieben (ich bin mir nicht 100% sicher, ob das die `"out"`-Deklaration in `tsconfig.json` überschreibt oder diese dazu führt, dass dieser Teil im Gulp-Task ignoriert wird, es klappt jedenfalls so. Als letzter Schritt wird Browser-Sync gesagt, es soll die Seite neu laden (das `{stream: true}` habe ich einfach abgeschrieben und kann es nicht erklären).
+- Würde ich `gulp typescript` per Kommandozeile aufrufen, wird die eben definierte `tsconfig.json`-Datei eingelesen und alle dort vereinbarten Quelldateien werden übersetzt und zurück ins aktuelle Verzeichnis geschrieben (ich bin mir nicht 100% sicher, ob das die `"out"`-Deklaration in `tsconfig.json` überschreibt oder diese dazu führt, dass dieser Teil im Gulp-Task ignoriert wird, es klappt jedenfalls so. Als letzter Schritt wird Browser-Sync gesagt, es soll die Seite neu laden (das `{stream: true}` habe ich einfach abgeschrieben und kann es nicht erklären).
 
-Würde ich `gulp browser-sync` per Kommandozeile aufrufen, würde ein Server (auf <http://localhost:3000>) starten, der alle css- und html-Dateien im aktuellen Verzeichnis überwacht und den Standard-Browser mit `index.html` öffnet.
+- Würde ich `gulp browser-sync` per Kommandozeile aufrufen, würde ein Server (auf <http://localhost:3000>) starten, der alle css- und html-Dateien im aktuellen Verzeichnis überwacht und den Standard-Browser mit `index.html` öffnet.
 
-Der `default`-Task wird gestartet, wenn ich `gulp` in der Kommandozeile ohne weiteren Parameter aufrufe. In diesem Fall wird zunächst `typescript` und dann `browser-sync` aufgerufen und danach jede ts-Datei überwacht und bei Änderungen immer wieder der `typescript`-Task durchgeführt, um alle Dateien neu zu übersetzen und einen Reload der Seite auszulösen.
+- Der `default`-Task wird gestartet, wenn ich `gulp` in der Kommandozeile ohne weiteren Parameter aufrufe. In diesem Fall wird zunächst `typescript` und dann `browser-sync` aufgerufen und danach jede ts-Datei überwacht und bei Änderungen immer wieder der `typescript`-Task durchgeführt, um alle Dateien neu zu übersetzen und einen Reload der Seite auszulösen.
 
 So kann ich `gulp` starten:
 
 	$ node_modules/.bin/gulp
 
-Um das zu vereinfachen, trage ich den Aufruf in `packages.json` als `start`-Script ein. Dann kann ich zukünftig einfach `npm start`. Das sollte ich auch in `README.md` dokumentieren:
+Um das zu vereinfachen, trage ich (z.B: mit `vi`) den Aufruf in `packages.json` als `start`-Script ein (diese suchen automatisch in `node_modules/.bin` nach ausführbaren Programmen). Dann kann ich zukünftig einfach `npm run start` oder `npm start` eingeben. Das sollte ich auch in `README.md` dokumentieren.
 
 ```js
 {
@@ -251,8 +251,10 @@ setup-site:
 	git checkout master
 ```
 
-Dies legt einen neuen _branch_ namens `gh-pages` an, in dem ich alles bis auf die notwendigen Dateien lösche, inklusive dem Script selbst, das aber glücklicherweise weiterläuft. Ich passe `.gitignore` an, dann publiziere ich den neuen Branch bei Github Pages.
+Dies legt einen neuen _branch_ namens `gh-pages` an, in dem ich alles bis auf die notwendigen Dateien lösche, inklusive dem Script selbst, das aber glücklicherweise weiterläuft. Ich passe `.gitignore` an damit nicht mehr `app.js` ignoriert wird, dann publiziere ich den neuen Branch bei Github Pages und wechsle zurück zum `master`-_branch_.
 
-Bevor ich `make setup-site` aufrufen kann, muss ich diese aber erst einmal im `master`-_Branch_ einchecken, um sie nicht sofort wieder zu verlieren.
+Bevor ich `make setup-site` aufrufen kann, muss ich `Makefile` aber erst einmal im `master`-_Branch_ einchecken, um die Datei nicht sofort wieder zu verlieren.
+
+Die SPA ist nun unter `<user>.github.io/<repo>/` verfügbar.
 
 Das war's.
