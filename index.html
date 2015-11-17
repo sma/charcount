@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="style.css">
 		<script src="app.js"></script>
 	</head>
@@ -17,6 +18,13 @@
 				<textarea id="text" placeholder="Text" rows="12" cols="50"></textarea>
 				Anzahl der Zeichen: <b id="count">0</b>
 			</form>
+			
+			<div id="preview">
+				<h2 data-text="title"></h2>
+				<h3 data-text="author"></h3>
+				<h4 data-text="genre"></h4>
+				<div data-html="text"></div>
+			</div>
 		</div>
 	</body>
 </html>
