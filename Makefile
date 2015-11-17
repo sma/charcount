@@ -1,5 +1,12 @@
 publish:
+	tsc
+	cp app.ts app.js app.js.map index.html style.css /tmp
 	git checkout gh-pages
+	mv /tmp/app.ts .
+	mv /tmp/app.js .
+	mv /tmp/app.js.map .
+	mv /tmp/index.html .
+	mv /tmp/style.css . 
 	git add .
 	git commit -m "next version"
 	git push origin gh-pages
