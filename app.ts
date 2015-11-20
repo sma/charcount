@@ -39,20 +39,24 @@ function setupPreview(id: string, properties: string[]) {
 	}
 
 	function format(s: string): string {
+		var pres = [];
 		return "<p>" + s
 			.replace(/&/g, "&amp;")
 			.replace(/</g, "&lt;")
+			.replace(/^```\w*$([\s\S]*)^```$/gm, (_, m) => `<pre>${pres.push(m) - 1}</pre>`)
 			.replace(/\_(.*?)\_/g, "<em>$1</em>")
 			.replace(/\*(.*?)\*/g, "<strong>$1</strong>")
 			.replace(/`(.*?)`/g, "<code>$1</code>")
 			.replace(/"\b/g, "„")
 			.replace(/"/g, "“")
-			.replace(/^---+/gm, "<hr>")
+			.replace(/^---+$/gm, "\n<hr>\n")
 			.replace(/--/g, "—")
 			.replace(/\.\.\./g, "…")
 			.replace(/  $/gm, "<br>")
 			.replace(/^#(.*)$/gm, "<h1>$1</h1>")
-			.replace(/\n\n/g, "</p><p>") + "</p>";
+			.replace(/\n\n+/g, "</p>\n<p>")
+			.replace(/<p><hr><\/p>/g, "<hr>")
+			.replace(/<pre>(\d+)<\/pre>/g, (_, m) => `<pre>${pres[m]}</pre>`) + "</p>";
 	}
 
 	function replace(element: HTMLElement, data: any) {
