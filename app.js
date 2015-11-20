@@ -34,20 +34,24 @@ function setupPreview(id, properties) {
         return document.getElementById(id).value;
     }
     function format(s) {
+        var pres = [];
         return "<p>" + s
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
+            .replace(/^```\w*$([\s\S]*)^```$/gm, function (_, m) { return ("<pre>" + (pres.push(m) - 1) + "</pre>"); })
             .replace(/\_(.*?)\_/g, "<em>$1</em>")
             .replace(/\*(.*?)\*/g, "<strong>$1</strong>")
             .replace(/`(.*?)`/g, "<code>$1</code>")
             .replace(/"\b/g, "„")
             .replace(/"/g, "“")
-            .replace(/^---+/gm, "<hr>")
+            .replace(/^---+$/gm, "\n<hr>\n")
             .replace(/--/g, "—")
             .replace(/\.\.\./g, "…")
             .replace(/  $/gm, "<br>")
             .replace(/^#(.*)$/gm, "<h1>$1</h1>")
-            .replace(/\n\n/g, "</p><p>") + "</p>";
+            .replace(/\n\n+/g, "</p>\n<p>")
+            .replace(/<p><hr><\/p>/g, "<hr>")
+            .replace(/<pre>(\d+)<\/pre>/g, function (_, m) { return ("<pre>" + pres[m] + "</pre>"); }) + "</p>";
     }
     function replace(element, data) {
         if (element.dataset["html"]) {
