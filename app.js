@@ -1,19 +1,24 @@
-/// Calls the given function once the DOM is ready.
+/** Calls the given function once the DOM is ready. */
 function ready(f) {
     document.addEventListener("DOMContentLoaded", f);
 }
-/// Counts the number of non-whitespace characters. 
+/** Counts the number of non-whitespace, non-markup characters. */
 function countCharacters(s) {
     if (!s) {
         return 0;
     }
     return s
-        .replace(/\_(.*?)\_/g, "$1")
-        .replace(/\*(.*?)\*/g, "$1")
-        .replace(/`(.*?)`/g, "$1")
-        .replace(/\s+/g, '').length;
+        .replace(/^```\w*$/gm, "")
+        .replace(/\_(.+?)\_/g, "$1")
+        .replace(/\*(.+?)\*/g, "$1")
+        .replace(/`(.+?)`/g, "$1")
+        .replace(/\s+/g, '')
+        .replace(/^---+$/gm, "").length;
 }
-/// Persists the specified input field or text area to local storage.
+/**
+ * Persists the specified input field or text area to local storage.
+ * @param id  ID of `input` or `textarea` element to persist its value after changes
+ */
 function storeLocally(id) {
     var el = document.getElementById(id);
     var handle;
@@ -27,7 +32,11 @@ function storeLocally(id) {
         });
     }
 }
-/// Implements the preview function.
+/**
+ * Implements the preview function.
+ * @param id          ID of parent element search for `data-text` and `data-html` annotation
+ * @param properties  array of IDs of `input` or `textarea` element to listen for changes
+ */
 function setupPreview(id, properties) {
     var handle;
     function value(id) {
@@ -39,16 +48,19 @@ function setupPreview(id, properties) {
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/^```\w*$([\s\S]*)^```$/gm, function (_, m) { return ("<pre>" + (pres.push(m) - 1) + "</pre>"); })
-            .replace(/\_(.*?)\_/g, "<em>$1</em>")
-            .replace(/\*(.*?)\*/g, "<strong>$1</strong>")
-            .replace(/`(.*?)`/g, "<code>$1</code>")
+            .replace(/\_(.+?)\_/g, "<em>$1</em>")
+            .replace(/\*(.+?)\*/g, "<strong>$1</strong>")
+            .replace(/`(.+?)`/g, "<code>$1</code>")
             .replace(/"\b/g, "„")
             .replace(/"/g, "“")
             .replace(/^---+$/gm, "\n<hr>\n")
             .replace(/--/g, "—")
             .replace(/\.\.\./g, "…")
             .replace(/  $/gm, "<br>")
-            .replace(/^#(.*)$/gm, "<h1>$1</h1>")
+            .replace(/^##(.+)$/gm, "<h2>$1</h2>")
+            .replace(/^#(.+)$/gm, "<h1>$1</h1>")
+            .replace(/^ {0,3}- (.+)$/gm, "<ul><li>$1</li></ul>")
+            .replace(/<\/ul>\n<ul>/g, "")
             .replace(/\n\n+/g, "</p>\n<p>")
             .replace(/<p><hr><\/p>/g, "<hr>")
             .replace(/<pre>(\d+)<\/pre>/g, function (_, m) { return ("<pre>" + pres[m] + "</pre>"); }) + "</p>";
@@ -87,8 +99,12 @@ function setupPreview(id, properties) {
     });
     preview();
 }
-/// Implements counting characters.
-function setupCount(textId, countId) {
+/**
+ * Implements counting characters after changes.
+ * @param textId  ID of input or textarea element to count
+ * @param countId ID of HTML element to display the count
+ */
+function setupCounting(textId, countId) {
     var text = document.getElementById(textId);
     var count = document.getElementById(countId);
     function updateCount() {
@@ -101,6 +117,6 @@ ready(function () {
     // persist all user input
     ["title", "author", "genre", "text"].forEach(storeLocally);
     setupPreview("preview", ["title", "author", "genre", "text"]);
-    setupCount("text", "count");
+    setupCounting("text", "count");
 });
 //# sourceMappingURL=app.js.map

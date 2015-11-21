@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div class="content">
-			<h1>Zeichenzähler <small>Version 2</small></h1>
+			<h1>Zeichenzähler <small>Version 3</small></h1>
 			<p>Schreibe maximal <b>1800</b> Zeichen. Titel, Autor und Genre &amp; Setting zählen nicht mit.</p>
 			<form>
 				<input id="title" placeholder="Titel">
@@ -20,9 +20,9 @@
 			</form>
 			
 			<div id="preview">
-				<h2 data-text="title"></h2>
-				<h3 data-text="author"></h3>
-				<h4 data-text="genre"></h4>
+				<h1 class="title" data-text="title"></h1>
+				<div class="author" data-text="author"></div>
+				<div class="genre" data-text="genre"></div>
 				<div data-html="text"></div>
 			</div>
 		</div>
