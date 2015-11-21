@@ -93,27 +93,38 @@ input:focus, textarea:focus {
 	line-height: 24px;
 }
 
-#preview h2, #preview h3, #preview h4 {
+#preview h1.title, #preview .author, #preview .genre {
 	text-align: center;
-	font-weight: normal;
 }
 
-#preview h2 {
-	margin: 1em 0 0;
+#preview h1.title {
+	margin: 0;
 	font-size: 48px;
 	line-height: 58px;
 	font-weight: bold;
+	border: 0;
 }
 
-#preview h3 {
+#preview .author {
 	margin: 2em 0;
 	font-weight: normal;
 	font-style: italic;
 }
 
-#preview h4 {
+#preview .genre {
 	margin: 2em 0;
 	text-transform: uppercase;
+}
+
+#preview h1 {
+	font-size: 25px;
+	margin: 1.5em 0 .5em;
+	border-bottom: 1px solid #DDD;
+}
+
+#preview h2 {
+	font-size: 20px;
+	margin: 1em 0 .5em;
 }
 
 #preview p {
@@ -124,13 +135,14 @@ input:focus, textarea:focus {
 	margin: 2em 0;
 	border: 0;
 	height: 1px;
-	background-color: #AAA;
+	background-color: #DDD;
 }
 
 #preview pre {
 	font-family: Menlo, monospace;
 	font-size: 14px;
 	line-height: 17px;
-	border-left: 4px solid #AAA;
+	border-left: 4px solid #DDD;
 	padding: 4px 0 4px 1em;
+	overflow: auto;
 }
