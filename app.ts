@@ -1,3 +1,6 @@
+/** Defines the maximum number of characters */
+const maxCharCount = 2222;
+
 /** Calls the given function once the DOM is ready. */
 function ready(f: EventListener) {
 	document.addEventListener("DOMContentLoaded", f);
@@ -119,7 +122,8 @@ function setupCounting(textId: string, countId: string) {
 	var count = <HTMLSpanElement>document.getElementById(countId);
 
 	function updateCount() {
-		count.textContent = String(countCharacters(text.value));
+		var c = countCharacters(text.value);
+		count.textContent = String(c) + " (noch " + (maxCharCount - c) + ")";
 	}
 
 	text.addEventListener("input", updateCount);
@@ -128,6 +132,8 @@ function setupCounting(textId: string, countId: string) {
 }
 
 ready(() => {
+	document.getElementById("maximum").textContent = maxCharCount;
+
 	// persist all user input
 	["title", "author", "genre", "text"].forEach(storeLocally);
 
