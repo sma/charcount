@@ -1,3 +1,5 @@
+/** Defines the maximum number of characters */
+var maxCharCount = 2222;
 /** Calls the given function once the DOM is ready. */
 function ready(f) {
     document.addEventListener("DOMContentLoaded", f);
@@ -47,7 +49,7 @@ function setupPreview(id, properties) {
         return "<p>" + s
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
-            .replace(/^```\w*$([\s\S]*)^```$/gm, function (_, m) { return ("<pre>" + (pres.push(m) - 1) + "</pre>"); })
+            .replace(/^```\w*$([\s\S]*)^```$/gm, function (_, m) { return "<pre>" + (pres.push(m) - 1) + "</pre>"; })
             .replace(/\_(.+?)\_/g, "<em>$1</em>")
             .replace(/\*(.+?)\*/g, "<strong>$1</strong>")
             .replace(/`(.+?)`/g, "<code>$1</code>")
@@ -63,7 +65,7 @@ function setupPreview(id, properties) {
             .replace(/<\/ul>\n<ul>/g, "")
             .replace(/\n\n+/g, "</p>\n<p>")
             .replace(/<p><hr><\/p>/g, "<hr>")
-            .replace(/<pre>(\d+)<\/pre>/g, function (_, m) { return ("<pre>" + pres[m] + "</pre>"); }) + "</p>";
+            .replace(/<pre>(\d+)<\/pre>/g, function (_, m) { return "<pre>" + pres[m] + "</pre>"; }) + "</p>";
     }
     function replace(element, data) {
         if (element.dataset["html"]) {
@@ -108,12 +110,14 @@ function setupCounting(textId, countId) {
     var text = document.getElementById(textId);
     var count = document.getElementById(countId);
     function updateCount() {
-        count.textContent = String(countCharacters(text.value));
+        var c = countCharacters(text.value);
+        count.textContent = String(c) + " (noch " + (maxCharCount - c) + ")";
     }
     text.addEventListener("input", updateCount);
     updateCount();
 }
 ready(function () {
+    document.getElementById("maximum").textContent = "" + maxCharCount;
     // persist all user input
     ["title", "author", "genre", "text"].forEach(storeLocally);
     setupPreview("preview", ["title", "author", "genre", "text"]);
