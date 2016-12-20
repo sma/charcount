@@ -132,7 +132,7 @@ function setupCounting(textId: string, countId: string) {
 }
 
 ready(() => {
-	document.getElementById("maximum").textContent = maxCharCount;
+	document.getElementById("maximum").textContent = `${maxCharCount}`;
 
 	// persist all user input
 	["title", "author", "genre", "text"].forEach(storeLocally);

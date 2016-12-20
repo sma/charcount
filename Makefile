@@ -1,5 +1,5 @@
 publish:
-	tsc
+	node_modules/.bin/tsc
 	cp app.ts app.js app.js.map index.html style.css /tmp
 	git checkout gh-pages
 	mv /tmp/app.ts .
